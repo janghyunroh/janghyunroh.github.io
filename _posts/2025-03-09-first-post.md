@@ -1,0 +1,144 @@
+---
+title: 테스트 포스팅"
+date: 2025-03-09 15:31:00 + 0900
+categories: [test]
+tags: [테스트, 잡담]
+---
+아래는 다양한 마크다운 문법을 모두 포함한 테스트 문서 예시입니다.
+
+
+# 마크다운 테스트 문서
+
+이 문서는 **마크다운 랜더러**의 여러 기능(예: [korean(emphasis)], [korean(lists)], [korean(code blocks)], [korean(links)], [korean(tables)], [korean(math)])를 테스트하기 위해 작성된 예제입니다.
+
+---
+
+## 1. 헤더 (Headings)
+
+# 헤더 1  
+## 헤더 2  
+### 헤더 3  
+#### 헤더 4
+
+---
+
+## 2. 강조 (Emphasis)
+
+- **굵게**: `**텍스트**` 또는 `__텍스트__`
+- *기울임*: `*텍스트*` 또는 `_텍스트_`
+- ~~취소선~~: `~~텍스트~~`
+- **조합**: **_굵고 기울임_**
+
+---
+
+## 3. 리스트 (Lists)
+
+### 3.1 순서 없는 리스트 (Unordered List)
+
+- 항목 1
+- 항목 2
+  - 하위 항목 2-1
+  - 하위 항목 2-2
+- 항목 3
+
+### 3.2 순서 있는 리스트 (Ordered List)
+
+1. 첫 번째 항목
+2. 두 번째 항목
+   1. 서브 항목 2-1
+   2. 서브 항목 2-2
+3. 세 번째 항목
+
+### 3.3 체크박스 리스트 (Task List)
+
+- [x] 완료된 항목
+- [ ] 미완료 항목
+
+---
+
+## 4. 링크 (Links) 및 이미지 (Images)
+
+- [Google](https://www.google.com)
+- [GitHub Pages](https://pages.github.com)
+
+![대체 텍스트](https://via.placeholder.com/300x100 "이미지 타이틀")
+
+HTML 태그를 이용한 링크 예시:  
+<a href="https://www.example.com" target="_blank">Example Site</a>
+
+---
+
+## 5. 인라인 코드 및 코드 블록 (Inline Code & Code Blocks)
+
+- 인라인 코드 예시: `printf("Hello, World!");`
+
+### 5.1 코드 블록 (Ruby 예제)
+
+```ruby
+# Ruby 예제 코드
+def hello_world
+  puts "Hello, World!"
+end
+
+hello_world
+```
+
+### 5.2 코드 블록 (Python 예제)
+
+```python
+# Python 예제 코드
+def hello_world():
+    print("Hello, World!")
+    
+hello_world()
+```
+
+---
+
+## 6. 블록 인용 (Blockquotes)
+
+> **인용문 예시**  
+> "마크다운은 간결하고 읽기 쉬운 문서 작성 도구입니다."  
+> — [korean(Author Name)]
+
+---
+
+## 7. 수학 공식 (Math Formulas)
+
+- 인라인 수학 공식: \( E = mc^2 \)
+
+- 블록 수학 공식:
+  \[
+  \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+  \]
+
+---
+
+## 8. 표 (Tables)
+
+| 이름       | 나이 | 직업    |
+|------------|------|---------|
+| 김철수     | 30   | 개발자  |
+| 이영희     | 25   | 디자이너|
+| 박민수     | 28   | 기획자  |
+
+---
+
+## 9. 수평선 (Horizontal Rules)
+
+---
+***
+___
+
+---
+
+## 10. HTML 태그 사용 예시
+
+<div style="color: blue; border: 1px solid #ccc; padding: 10px;">
+  이 문장은 HTML 태그를 이용하여 스타일을 적용한 예시입니다.
+</div>
+
+---
+
+이 문서는 [korean(Markdown)]의 여러 기능을 테스트하기 위해 작성되었습니다. 각 섹션을 참고하여 원하는 문법을 자유롭게 사용해 보세요.
+
