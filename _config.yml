@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: Roh Janghyun # the main title
 
-tagline: ML 엔지니어 # it will display as the subtitle
+tagline: ML 엔지니어의 개발 공부 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   ML 엔지니어의 테크 블로그입니다.
@@ -95,10 +95,10 @@ theme_mode: # [light | dark]
 # will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-cdn: "https://chirpy-img.netlify.app"
+# cdn: "https://chirpy-img.netlify.app"
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "/commons/avatar.jpg"
+avatar: /assets/img/personal/1741674253294.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
