@@ -1,6 +1,6 @@
 ---
 title: 지식 그래프(KG) 임베딩 - LLM과 지식 그래프를 연결하는 방법
-description: RAG Paper를 review하고 현대 
+description: 지식 그래프를 LLM이 다룰 수 있도록 만드는 방법에 대해 알아봅니다.
 author: janghyunroh
 date: 2025-07-03 16:42 +0900
 categories: [연구, 랩미팅]
@@ -15,7 +15,7 @@ image:
 
 ---
 
-## LLM의 Hallucination과 
+## 
 
 
 ## Knowledge Intensive Task
