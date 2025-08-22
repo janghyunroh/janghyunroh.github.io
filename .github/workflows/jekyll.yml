@@ -37,7 +37,7 @@ jobs:
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
         with:
-          ruby-version: '3.1' # Not needed with a .ruby-version file
+          ruby-version: "3.1" # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Setup Pages
@@ -63,3 +63,32 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # --- [새로 추가된 부분] Pinecone 벡터 DB 업데이트 작업 ---
+  update_vector_db:
+    # 'deploy' 작업(블로그 배포)이 성공해야만 이 작업을 실행합니다.
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 블로그 소스 코드를 가상 컴퓨터로 가져옵니다.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 파이썬을 설치합니다.
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # 3. 파이썬 스크립트 실행에 필요한 라이브러리들을 설치합니다.
+      - name: Install Python dependencies
+        run: |
+          pip install pinecone-client langchain "unstructured[md]"
+
+      # 4. 3단계에서 만든 파이썬 스크립트를 실행합니다.
+      #    이때 2단계에서 등록한 Secret들을 환경 변수로 넘겨줍니다.
+      - name: Run update script to Pinecone
+        run: python ./scripts/update_db.py
+        env:
+          PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
+          PINECONE_INDEX_HOST: ${{ secrets.PINECONE_INDEX_HOST }}
