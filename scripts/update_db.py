@@ -1,51 +1,38 @@
-# scripts/update_db.py (최종 수정 버전)
+# scripts/update_db.py (최종 검증 버전)
 
 import os
-import pinecone
-# 1. DeprecationWarning 해결: langchain_community에서 직접 import 하도록 수정
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_pinecone import PineconeVectorStore
 
-# 환경 변수에서 정보 로드
+# --- 1. 설정 및 환경 변수 로드 ---
+print("스크립트 실행을 시작합니다. 환경 변수를 설정합니다.")
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
-pinecone_index_host = os.getenv("PINECONE_INDEX_HOST")
 pinecone_index_name = "my-blog"
 
-# Pinecone 클라이언트 및 인덱스 초기화
-pc = pinecone.Pinecone(api_key=pinecone_api_key)
-index = pc.Index(host=pinecone_index_host)
+# LangChain 라이브러리가 Pinecone에 접속할 수 있도록 API 키를 환경 변수로 설정합니다.
+# 이것이 공식적으로 권장되는 방식입니다.
+os.environ["PINECONE_API_KEY"] = pinecone_api_key
 
-# 마크다운 문서 로드 및 분할
+# --- 2. 문서 로드 및 분할 ---
+print("마크다운 문서를 로드하고 분할합니다...")
 loader = DirectoryLoader('./_posts', glob="**/*.md", loader_cls=UnstructuredMarkdownLoader)
 docs = loader.load()
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
 split_docs = text_splitter.split_documents(docs)
+print(f"총 {len(split_docs)}개의 문서 조각을 준비했습니다.")
 
-# Pinecone에 업로드할 데이터 형태로 변환
-vectors_to_upsert = []
-for i, doc in enumerate(split_docs):
-    vector_id = f"{doc.metadata['source']}-{i}"
+# --- 3. Pinecone에 업로드 (가장 중요한 부분) ---
+# LangChain의 공식 PineconeVectorStore 통합 기능을 사용합니다.
+# 이 함수는 Pinecone의 '통합 임베딩' 기능을 사용하도록 특별히 설계되었습니다.
+# 'embedding' 인자를 전달하지 않으면, LangChain이 알아서 Pinecone에게
+# 'text' 필드의 내용을 기반으로 벡터를 생성하라고 요청합니다.
+print("Pinecone에 데이터 업로드를 시작합니다...")
+vectorstore = PineconeVectorStore.from_documents(
+    documents=split_docs,
+    index_name=pinecone_index_name,
+    embedding=None, # None으로 설정하여 Pinecone의 내장 임베딩 모델을 사용하도록 명시
+    text_key="text" # Pinecone 인덱스 설정의 'Field map'과 일치시켜야 함
+)
 
-    # Pinecone이 text 필드를 보고 벡터를 생성하므로, metadata에 반드시 포함
-    metadata = {
-        "source": doc.metadata.get('source', ''),
-        "text": doc.page_content
-    }
-
-    # 2. ListConversionException 해결: record에서 'values' 키를 완전히 제거
-    # Pinecone Serverless가 metadata의 'text'를 보고 'values'를 자동으로 생성합니다.
-    record = {
-        "id": vector_id,
-        "metadata": metadata
-    }
-    vectors_to_upsert.append(record)
-
-# Pinecone에 데이터 저장 (Upsert)
-print(f"총 {len(vectors_to_upsert)}개의 레코드를 Pinecone에 업로드합니다.")
-batch_size = 100
-for i in range(0, len(vectors_to_upsert), batch_size):
-    batch = vectors_to_upsert[i:i+batch_size]
-    index.upsert(vectors=batch)
-
-print("Pinecone 벡터 DB 업데이트가 완료되었습니다.")
-print(index.describe_index_stats())
+print("Pineone 벡터 DB 업데이트가 성공적으로 완료되었습니다.")
