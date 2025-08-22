@@ -25,3 +25,6 @@ package-lock.json
 # Misc
 _sass/vendors
 # assets/js/dist
+
+# Vector DB 스크립트용 캐시 제외
+/scripts/__pycache__/

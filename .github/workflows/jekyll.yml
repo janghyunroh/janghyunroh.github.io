@@ -81,9 +81,10 @@ jobs:
           python-version: "3.10"
 
       # 3. 파이썬 스크립트 실행에 필요한 라이브러리들을 설치합니다.
+      # requirements.txt 파일을 사용하여 고정된 버전의 패키지를 설치
       - name: Install Python dependencies
         run: |
-          pip install pinecone langchain "unstructured[md]"
+          pip install -r requirements.txt
 
       # 4. 3단계에서 만든 파이썬 스크립트를 실행합니다.
       #    이때 2단계에서 등록한 Secret들을 환경 변수로 넘겨줍니다.

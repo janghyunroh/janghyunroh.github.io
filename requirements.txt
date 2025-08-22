@@ -1,0 +1,4 @@
+pinecone==6.0.0
+langchain==0.3.27
+langchain-community==0.2.22
+unstructured[md]==0.18.13
