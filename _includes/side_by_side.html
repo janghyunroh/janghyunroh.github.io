@@ -1,0 +1,57 @@
+<style>
+  .roh-final-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+
+    /* 전체 컨테이너 스타일 */
+    border: 1px solid var(--main-border-color);
+    background-color: var(--card-bg);
+    padding: 1.5em; /* 전체 패딩 유지 */
+    border-radius: 12px;
+  }
+
+  .roh-final-item {
+    flex: 1;
+    min-width: 300px;
+    /* 각 item 내부 패딩은 여기서 설정합니다. */
+    padding: 0 15px; /* 양쪽에 15px 패딩을 주어 구분선으로부터 내용을 띄웁니다. */
+  }
+
+  /* =================================================================
+     가운데 구분선 스타일 재정의
+     - flex 아이템 간의 gap을 이용하는 대신, border-right를 사용하고
+       padding으로 내용을 띄웁니다.
+     - 마지막 아이템에는 border-right가 없도록 합니다.
+    =================================================================
+  */
+  .roh-final-item:not(:last-child) {
+    /* 마지막 아이템이 아닌 모든 아이템에 적용 */
+    border-right: 1px solid var(--main-border-color);
+  }
+
+  /* 모바일 뷰에서 세로로 쌓일 때 구분선 없애기 */
+  @media (max-width: 768px) {
+    /* 일반적으로 모바일로 간주되는 너비 */
+    .roh-final-container {
+      flex-direction: column; /* 세로로 쌓이도록 변경 */
+    }
+    .roh-final-item {
+      padding: 15px 0; /* 세로 패딩만 적용 */
+    }
+    .roh-final-item:not(:last-child) {
+      border-right: none; /* 가로 구분선 제거 */
+      border-bottom: 1px solid var(--main-border-color); /* 세로 구분선 추가 */
+    }
+  }
+</style>
+
+<div class="roh-final-container">
+  <div class="roh-final-item">
+    {{ include.left | markdownify }}
+  </div>
+  <div class="roh-final-item">
+    {{ include.right | markdownify }}
+  </div>
+</div>
