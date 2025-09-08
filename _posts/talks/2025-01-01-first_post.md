@@ -1,6 +1,6 @@
 ---
-title: 블로그 첫 구축
-description: 블로그 첫 개설
+title: AI 시대를 위한 나만의 데이터베이스, 블로그를 시작하며
+description: LLM에게 나를 기억시키기 위한 첫걸음
 author: janghyunroh
 date: 2025-03-01 09:00 +0900
 categories: [잡담]

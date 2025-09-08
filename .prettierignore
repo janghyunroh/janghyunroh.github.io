@@ -1,0 +1,7 @@
+# .prettierignore
+
+# Jekyll/Liquid 관련 파일은 자동 정렬하지 않음
+*.html
+*.liquid
+_layouts/
+_includes/
