@@ -1,0 +1,93 @@
+.tic-tac-toe-game {
+  text-align: center;
+  padding: 2rem;
+}
+
+.tic-tac-toe-game h1 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+}
+
+.status {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.reset-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--link-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.reset-button:hover {
+  opacity: 0.8;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  grid-gap: 10px;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.cell {
+  width: 120px;
+  height: 120px;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border-color);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cell:hover:not(.x):not(.o) {
+  background: var(--card-header-bg);
+}
+
+.cell.x::after {
+  content: '✕';
+  color: #e74c3c;
+}
+
+.cell.o::after {
+  content: '○';
+  color: #3498db;
+  font-size: 4rem;
+}
+
+.cell.winner {
+  background: rgba(46, 204, 113, 0.2);
+}
+
+@media (max-width: 600px) {
+  .board {
+    grid-template-columns: repeat(3, 90px);
+    max-width: 290px;
+  }
+
+  .cell {
+    width: 90px;
+    height: 90px;
+    font-size: 2.5rem;
+  }
+}

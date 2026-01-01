@@ -1,0 +1,38 @@
+---
+layout: page
+---
+
+<div class="game-wrapper">
+  <div class="game-header">
+    <a href="{{ '/games' | relative_url }}" class="back-button">← Back to Games</a>
+  </div>
+
+  {{ content }}
+</div>
+
+<style>
+.game-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.game-header {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--btn-bg);
+  color: var(--btn-text-color);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.back-button:hover {
+  background: var(--link-color);
+  color: white;
+}
+</style>

@@ -1,0 +1,124 @@
+---
+layout: page
+---
+
+<div class="games-container">
+  <h1>Mini Games</h1>
+  <p>Enjoy these classic games built with HTML5, CSS, and JavaScript!</p>
+
+  <div class="games-grid">
+    <div class="game-card">
+      <div class="game-icon">🎯</div>
+      <h3>Tic-Tac-Toe</h3>
+      <p>Classic X and O game</p>
+      <a href="{{ '/games/tic-tac-toe' | relative_url }}" class="game-button">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon">🔢</div>
+      <h3>2048</h3>
+      <p>Addictive number puzzle</p>
+      <a href="{{ '/games/2048' | relative_url }}" class="game-button">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon">🐍</div>
+      <h3>Snake</h3>
+      <p>Classic snake game</p>
+      <a href="{{ '/games/snake' | relative_url }}" class="game-button">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon">🧱</div>
+      <h3>Tetris</h3>
+      <p>Falling blocks puzzle</p>
+      <a href="{{ '/games/tetris' | relative_url }}" class="game-button">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon">💣</div>
+      <h3>Minesweeper</h3>
+      <p>Find all the mines</p>
+      <a href="{{ '/games/minesweeper' | relative_url }}" class="game-button">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon">🃏</div>
+      <h3>Memory Card</h3>
+      <p>Match the pairs</p>
+      <a href="{{ '/games/memory-card' | relative_url }}" class="game-button">Play Now</a>
+    </div>
+  </div>
+</div>
+
+<style>
+.games-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.games-container h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.games-container > p {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text-muted-color);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.game-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.game-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.game-card h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.game-card p {
+  color: var(--text-muted-color);
+  margin-bottom: 1.5rem;
+}
+
+.game-button {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--btn-bg);
+  color: var(--btn-text-color);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.game-button:hover {
+  background: var(--link-color);
+  color: white;
+}
+</style>

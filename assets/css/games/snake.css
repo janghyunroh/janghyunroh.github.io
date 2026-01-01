@@ -1,0 +1,131 @@
+.snake-game {
+  text-align: center;
+  padding: 2rem;
+}
+
+.snake-game h1 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto 1rem;
+}
+
+.score-container {
+  background: var(--card-bg);
+  border: 2px solid var(--card-border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+}
+
+.score-label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  color: var(--text-muted-color);
+  margin-bottom: 0.25rem;
+}
+
+.score {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.reset-button, .retry-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--link-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.reset-button:hover, .retry-button:hover {
+  opacity: 0.8;
+}
+
+.instructions {
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted-color);
+}
+
+#snakeCanvas {
+  display: block;
+  margin: 0 auto;
+  background: #1a1a1a;
+  border: 2px solid var(--card-border-color);
+  border-radius: 8px;
+}
+
+.game-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--card-bg);
+  border: 2px solid var(--card-border-color);
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.game-message.hidden {
+  display: none;
+}
+
+.game-message p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.final-score {
+  font-size: 2rem;
+  color: var(--link-color);
+  margin-bottom: 2rem;
+}
+
+.game-message-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.submit-score-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.submit-score-button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  #snakeCanvas {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+  }
+}
