@@ -2,8 +2,17 @@ class TetrisGame {
   constructor() {
     this.canvas = document.getElementById('tetrisCanvas');
     this.ctx = this.canvas.getContext('2d');
-    this.nextCanvas = document.getElementById('nextCanvas');
-    this.nextCtx = this.nextCanvas.getContext('2d');
+
+    // Multiple next piece canvases
+    this.nextCanvases = [
+      document.getElementById('next1Canvas'),
+      document.getElementById('next2Canvas'),
+      document.getElementById('next3Canvas'),
+      document.getElementById('next4Canvas'),
+      document.getElementById('next5Canvas')
+    ];
+    this.nextCtxs = this.nextCanvases.map(canvas => canvas.getContext('2d'));
+
     this.holdCanvas = document.getElementById('holdCanvas');
     this.holdCtx = this.holdCanvas.getContext('2d');
     this.scoreElement = document.querySelector('.score');
@@ -46,7 +55,7 @@ class TetrisGame {
     };
 
     this.currentPiece = null;
-    this.nextPiece = null;
+    this.nextPieces = []; // Array of 5 next pieces
     this.holdPiece = null;
     this.canHold = true;
     this.currentX = 0;
@@ -67,7 +76,10 @@ class TetrisGame {
   }
 
   init() {
-    this.nextPiece = this.getRandomPiece();
+    // Initialize 5 next pieces
+    for (let i = 0; i < 5; i++) {
+      this.nextPieces.push(this.getRandomPiece());
+    }
     this.spawnPiece();
     this.update();
   }
@@ -80,9 +92,12 @@ class TetrisGame {
     this.lastTime = 0;
     this.holdPiece = null;
     this.canHold = true;
+    this.nextPieces = [];
+    for (let i = 0; i < 5; i++) {
+      this.nextPieces.push(this.getRandomPiece());
+    }
     this.gameMessage.classList.add('hidden');
     this.updateScore();
-    this.nextPiece = this.getRandomPiece();
     this.drawHold();
     this.spawnPiece();
     this.update();
@@ -95,8 +110,8 @@ class TetrisGame {
   }
 
   spawnPiece() {
-    this.currentPiece = this.nextPiece;
-    this.nextPiece = this.getRandomPiece();
+    this.currentPiece = this.nextPieces.shift();
+    this.nextPieces.push(this.getRandomPiece());
     this.currentX = Math.floor(this.cols / 2) - Math.floor(this.currentPiece[0].length / 2);
     this.currentY = 0;
     this.canHold = true;
@@ -105,7 +120,7 @@ class TetrisGame {
       this.gameOver();
     }
 
-    this.drawNext();
+    this.drawNextPieces();
   }
 
   handleKeyPress(e) {
@@ -223,13 +238,25 @@ class TetrisGame {
     }
   }
 
+  // Calculate ghost piece position (where piece will land)
+  getGhostY() {
+    let ghostY = this.currentY;
+    while (!this.checkCollision(this.currentPiece, this.currentX, ghostY + 1)) {
+      ghostY++;
+    }
+    return ghostY;
+  }
+
   update(time = 0) {
     const deltaTime = time - this.lastTime;
     this.lastTime = time;
-    this.dropCounter += deltaTime;
 
-    if (this.dropCounter > this.dropInterval) {
-      this.dropPiece();
+    if (this.currentPiece) {
+      this.dropCounter += deltaTime;
+
+      if (this.dropCounter > this.dropInterval) {
+        this.dropPiece();
+      }
     }
 
     this.draw();
@@ -266,6 +293,22 @@ class TetrisGame {
       }
     }
 
+    // Draw ghost piece (semi-transparent preview of where piece will land)
+    if (this.currentPiece) {
+      const ghostY = this.getGhostY();
+      for (let row = 0; row < this.currentPiece.length; row++) {
+        for (let col = 0; col < this.currentPiece[row].length; col++) {
+          if (this.currentPiece[row][col] !== 0) {
+            this.drawGhostBlock(
+              this.currentX + col,
+              ghostY + row,
+              this.currentPiece[row][col]
+            );
+          }
+        }
+      }
+    }
+
     // Draw current piece
     if (this.currentPiece) {
       for (let row = 0; row < this.currentPiece.length; row++) {
@@ -290,6 +333,28 @@ class TetrisGame {
       this.blockSize - 2,
       this.blockSize - 2
     );
+  }
+
+  drawGhostBlock(x, y, colorIndex) {
+    this.ctx.fillStyle = this.colors[colorIndex];
+    this.ctx.globalAlpha = 0.2;
+    this.ctx.fillRect(
+      x * this.blockSize + 1,
+      y * this.blockSize + 1,
+      this.blockSize - 2,
+      this.blockSize - 2
+    );
+    // Draw border
+    this.ctx.strokeStyle = this.colors[colorIndex];
+    this.ctx.globalAlpha = 0.5;
+    this.ctx.lineWidth = 2;
+    this.ctx.strokeRect(
+      x * this.blockSize + 2,
+      y * this.blockSize + 2,
+      this.blockSize - 4,
+      this.blockSize - 4
+    );
+    this.ctx.globalAlpha = 1.0;
   }
 
   holdCurrentPiece() {
@@ -317,24 +382,30 @@ class TetrisGame {
     this.draw();
   }
 
-  drawNext() {
-    this.nextCtx.fillStyle = '#1a1a1a';
-    this.nextCtx.fillRect(0, 0, this.nextCanvas.width, this.nextCanvas.height);
+  drawNextPieces() {
+    for (let i = 0; i < 5; i++) {
+      const ctx = this.nextCtxs[i];
+      const canvas = this.nextCanvases[i];
+      const piece = this.nextPieces[i];
 
-    const blockSize = 25;
-    const offsetX = (this.nextCanvas.width - this.nextPiece[0].length * blockSize) / 2;
-    const offsetY = (this.nextCanvas.height - this.nextPiece.length * blockSize) / 2;
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (let row = 0; row < this.nextPiece.length; row++) {
-      for (let col = 0; col < this.nextPiece[row].length; col++) {
-        if (this.nextPiece[row][col] !== 0) {
-          this.nextCtx.fillStyle = this.colors[this.nextPiece[row][col]];
-          this.nextCtx.fillRect(
-            offsetX + col * blockSize + 1,
-            offsetY + row * blockSize + 1,
-            blockSize - 2,
-            blockSize - 2
-          );
+      const blockSize = 20;
+      const offsetX = (canvas.width - piece[0].length * blockSize) / 2;
+      const offsetY = (canvas.height - piece.length * blockSize) / 2;
+
+      for (let row = 0; row < piece.length; row++) {
+        for (let col = 0; col < piece[row].length; col++) {
+          if (piece[row][col] !== 0) {
+            ctx.fillStyle = this.colors[piece[row][col]];
+            ctx.fillRect(
+              offsetX + col * blockSize + 1,
+              offsetY + row * blockSize + 1,
+              blockSize - 2,
+              blockSize - 2
+            );
+          }
         }
       }
     }
@@ -346,7 +417,7 @@ class TetrisGame {
 
     if (this.holdPiece === null) return;
 
-    const blockSize = 25;
+    const blockSize = 20;
     const offsetX = (this.holdCanvas.width - this.holdPiece[0].length * blockSize) / 2;
     const offsetY = (this.holdCanvas.height - this.holdPiece.length * blockSize) / 2;
 

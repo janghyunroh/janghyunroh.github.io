@@ -27,12 +27,16 @@ permalink: /games/tetris/
   <div class="game-container">
     <div class="hold-piece">
       <h3>Hold</h3>
-      <canvas id="holdCanvas" width="120" height="120"></canvas>
+      <canvas id="holdCanvas" width="100" height="100"></canvas>
     </div>
     <canvas id="tetrisCanvas" width="300" height="600"></canvas>
-    <div class="next-piece">
+    <div class="next-pieces">
       <h3>Next</h3>
-      <canvas id="nextCanvas" width="120" height="120"></canvas>
+      <canvas id="next1Canvas" width="100" height="80"></canvas>
+      <canvas id="next2Canvas" width="100" height="80"></canvas>
+      <canvas id="next3Canvas" width="100" height="80"></canvas>
+      <canvas id="next4Canvas" width="100" height="80"></canvas>
+      <canvas id="next5Canvas" width="100" height="80"></canvas>
     </div>
   </div>
 

@@ -11,28 +11,69 @@ layout: page
 </div>
 
 <style>
+/* Compact layout for games - minimize vertical space */
 .game-wrapper {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .game-header {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .back-button {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   background: var(--btn-bg);
   color: var(--btn-text-color);
   border-radius: 6px;
   text-decoration: none;
   transition: background 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .back-button:hover {
   background: var(--link-color);
   color: white;
+}
+
+/* Remove excessive padding from all game containers */
+.snake-game,
+.game-2048,
+.tetris-game,
+.minesweeper-game,
+.tic-tac-toe-game,
+.memory-game {
+  padding: 0.5rem 1rem !important;
+}
+
+/* Compact game titles */
+.snake-game h1,
+.game-2048 h1,
+.tetris-game h1,
+.minesweeper-game h1,
+.tic-tac-toe-game h1,
+.memory-game h1 {
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 2rem !important;
+}
+
+/* Compact game info sections */
+.game-info {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Compact instructions */
+.instructions {
+  margin-bottom: 0.5rem !important;
+  padding: 0.5rem !important;
+  font-size: 0.85rem !important;
+}
+
+/* Compact difficulty selector for minesweeper */
+.difficulty-selector {
+  margin-bottom: 0.5rem !important;
 }
 </style>
