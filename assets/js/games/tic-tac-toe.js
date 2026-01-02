@@ -169,7 +169,7 @@ class TicTacToeGame {
           id: this.playerId,
           name: this.playerName
         },
-        board: Array(9).fill(null),
+        board: ['', '', '', '', '', '', '', '', ''],
         currentTurn: 'X',
         status: 'active',
         createdAt: firebase.database.ServerValue.TIMESTAMP
@@ -238,8 +238,12 @@ class TicTacToeGame {
     const snapshot = await this.gameRef.once('value');
     const game = snapshot.val();
 
-    if (!game || game.status !== 'active') return;
-    if (game.board[index] !== null) return;
+    if (!game || !game.board) {
+      console.error('Invalid game data in handleOnlineClick:', game);
+      return;
+    }
+    if (game.status !== 'active') return;
+    if (game.board[index] !== '' && game.board[index] !== null) return;
     if ((this.mySymbol === 'X' && game.currentTurn !== 'X') || (this.mySymbol === 'O' && game.currentTurn !== 'O')) {
       return;
     }
@@ -249,7 +253,7 @@ class TicTacToeGame {
     const nextTurn = this.mySymbol === 'X' ? 'O' : 'X';
 
     const winner = this.checkWinOnline(newBoard);
-    const isDraw = newBoard.every(cell => cell !== null);
+    const isDraw = newBoard.every(cell => cell !== '' && cell !== null);
 
     await this.gameRef.update({
       board: newBoard,
@@ -261,9 +265,14 @@ class TicTacToeGame {
   }
 
   updateGameUI(game) {
-    document.querySelector('.player-x .player-name').textContent = 
+    if (!game || !game.board) {
+      console.error('Invalid game data:', game);
+      return;
+    }
+
+    document.querySelector('.player-x .player-name').textContent =
       this.mySymbol === 'X' ? 'You' : game.playerX.name;
-    document.querySelector('.player-o .player-name').textContent = 
+    document.querySelector('.player-o .player-name').textContent =
       this.mySymbol === 'O' ? 'You' : game.playerO.name;
 
     game.board.forEach((cell, index) => {
