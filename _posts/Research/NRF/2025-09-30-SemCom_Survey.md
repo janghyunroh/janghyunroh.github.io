@@ -2,7 +2,7 @@
 title: 시멘틱 통신(Semantic Communication) - 6G를 위한 새로운 통신 패러다임
 description: IEEE Communications Surveys & Tutorials 2023에 게재된 SemCom 종합 서베이 논문을 리뷰하고 핵심 개념을 정리합니다.
 author: janghyunroh
-date: 2025-09-20 09:00 +0900
+date: 2025-09-30 09:00 +0900
 categories: [연구, NRF]
 tags: [공부, 대학원, 시멘틱통신, 6G, NRF]
 math: true
